@@ -1,0 +1,465 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Shashank Vatsa — Full-Stack Developer</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@0,400;0,700;1,400&family=Syne:wght@400;600;800&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --bg: #080810;
+  --surface: #0e0e1a;
+  --card: #12121f;
+  --border: rgba(255,255,255,0.07);
+  --border-hover: rgba(99,190,255,0.35);
+  --accent: #63beff;
+  --accent2: #00f0a0;
+  --text: #eeeef5;
+  --muted: #6b6b88;
+  --soft: #a0a0bf;
+  --mono: 'Space Mono', monospace;
+  --display: 'Syne', sans-serif;
+}
+
+html { scroll-behavior: smooth; }
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--display);
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+/* GRID LINES BG */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(99,190,255,0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(99,190,255,0.03) 1px, transparent 1px);
+  background-size: 60px 60px;
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* GLOW ORB */
+body::after {
+  content: '';
+  position: fixed;
+  width: 600px; height: 600px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(99,190,255,0.06) 0%, transparent 70%);
+  top: -200px; left: -100px;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.page { position: relative; z-index: 1; max-width: 860px; margin: 0 auto; padding: 0 2rem 6rem; }
+
+/* NAV */
+nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 2rem 0;
+  border-bottom: 1px solid var(--border);
+  margin-bottom: 0;
+}
+.nav-logo { font-family: var(--mono); font-size: 13px; color: var(--accent); letter-spacing: 0.08em; }
+.nav-links { display: flex; gap: 2rem; }
+.nav-links a { font-family: var(--mono); font-size: 11px; color: var(--muted); text-decoration: none; letter-spacing: 0.1em; text-transform: uppercase; transition: color 0.2s; }
+.nav-links a:hover { color: var(--accent); }
+
+/* HERO */
+.hero {
+  padding: 5rem 0 4rem;
+  border-bottom: 1px solid var(--border);
+}
+.hero-eyebrow {
+  font-family: var(--mono);
+  font-size: 11px;
+  color: var(--accent2);
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  margin-bottom: 1.5rem;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.hero-eyebrow::before {
+  content: '';
+  display: inline-block;
+  width: 24px; height: 1px;
+  background: var(--accent2);
+}
+.hero-name {
+  font-family: var(--display);
+  font-size: clamp(3rem, 8vw, 5.5rem);
+  font-weight: 800;
+  line-height: 0.95;
+  letter-spacing: -0.02em;
+  margin-bottom: 1.25rem;
+}
+.hero-name .line2 { color: var(--accent); display: block; }
+.hero-role {
+  font-family: var(--mono);
+  font-size: 14px;
+  color: var(--soft);
+  margin-bottom: 2.5rem;
+  line-height: 1.8;
+}
+.hero-role span { color: var(--accent); }
+.hero-cta { display: flex; gap: 12px; flex-wrap: wrap; }
+
+.btn {
+  font-family: var(--mono);
+  font-size: 12px;
+  padding: 10px 22px;
+  border-radius: 4px;
+  text-decoration: none;
+  letter-spacing: 0.05em;
+  transition: all 0.2s;
+  cursor: pointer;
+  display: inline-block;
+}
+.btn-primary {
+  background: var(--accent);
+  color: #080810;
+  border: 1px solid var(--accent);
+  font-weight: 700;
+}
+.btn-primary:hover { background: transparent; color: var(--accent); }
+.btn-ghost {
+  background: transparent;
+  color: var(--soft);
+  border: 1px solid var(--border);
+}
+.btn-ghost:hover { border-color: var(--accent); color: var(--accent); }
+
+/* SECTION */
+section { padding: 3.5rem 0; border-bottom: 1px solid var(--border); }
+.section-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 2rem;
+}
+.section-num { font-family: var(--mono); font-size: 11px; color: var(--accent); }
+.section-title { font-size: 11px; font-family: var(--mono); color: var(--muted); letter-spacing: 0.14em; text-transform: uppercase; }
+
+/* ABOUT */
+.about-body { font-size: 1.05rem; line-height: 1.85; color: var(--soft); max-width: 620px; }
+.about-body strong { color: var(--text); font-weight: 600; }
+
+/* SKILLS */
+.skills-cols { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 1rem; }
+.skill-group { }
+.skill-group-title { font-family: var(--mono); font-size: 10px; color: var(--muted); letter-spacing: 0.12em; text-transform: uppercase; margin-bottom: 10px; }
+.skill-pills { display: flex; flex-wrap: wrap; gap: 6px; }
+.pill {
+  font-family: var(--mono);
+  font-size: 11px;
+  padding: 5px 11px;
+  border-radius: 3px;
+  border: 1px solid var(--border);
+  color: var(--soft);
+  transition: all 0.18s;
+}
+.pill:hover { border-color: var(--accent); color: var(--accent); }
+.pill.core { border-color: rgba(99,190,255,0.25); color: var(--accent); background: rgba(99,190,255,0.06); }
+
+/* PROJECTS */
+.projects-list { display: grid; gap: 16px; }
+.project-card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 1.5rem;
+  transition: border-color 0.2s, transform 0.2s;
+  position: relative;
+  overflow: hidden;
+}
+.project-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0;
+  width: 3px; height: 100%;
+  background: var(--accent);
+  opacity: 0;
+  transition: opacity 0.2s;
+}
+.project-card:hover { border-color: var(--border-hover); transform: translateX(4px); }
+.project-card:hover::before { opacity: 1; }
+.project-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 10px; }
+.project-name { font-size: 1rem; font-weight: 600; color: var(--text); }
+.project-live {
+  font-family: var(--mono);
+  font-size: 10px;
+  color: var(--accent2);
+  border: 1px solid rgba(0,240,160,0.25);
+  padding: 3px 8px;
+  border-radius: 3px;
+  text-decoration: none;
+  white-space: nowrap;
+}
+.project-live:hover { background: rgba(0,240,160,0.08); }
+.project-desc { font-size: 13px; color: var(--soft); line-height: 1.7; margin-bottom: 12px; }
+.project-bullets { margin-bottom: 14px; padding-left: 0; list-style: none; }
+.project-bullets li {
+  font-size: 12px;
+  color: var(--muted);
+  padding: 3px 0;
+  padding-left: 16px;
+  position: relative;
+  line-height: 1.6;
+}
+.project-bullets li::before {
+  content: '→';
+  position: absolute;
+  left: 0;
+  color: var(--accent);
+  font-size: 10px;
+}
+.project-stack { display: flex; gap: 6px; flex-wrap: wrap; }
+.stack-tag {
+  font-family: var(--mono);
+  font-size: 10px;
+  padding: 3px 8px;
+  background: rgba(99,190,255,0.07);
+  color: var(--accent);
+  border-radius: 3px;
+}
+
+/* EXPERIENCE / EDU */
+.timeline { display: grid; gap: 1.25rem; }
+.tl-item { display: grid; grid-template-columns: 90px 1fr; gap: 1rem; }
+.tl-year { font-family: var(--mono); font-size: 11px; color: var(--muted); padding-top: 2px; line-height: 1.6; }
+.tl-content {}
+.tl-title { font-size: 15px; font-weight: 600; margin-bottom: 2px; }
+.tl-sub { font-family: var(--mono); font-size: 11px; color: var(--muted); margin-bottom: 6px; }
+.tl-desc { font-size: 12px; color: var(--soft); line-height: 1.65; }
+
+/* CONTACT */
+.contact-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 12px; }
+.contact-card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 1rem 1.25rem;
+  text-decoration: none;
+  transition: border-color 0.2s;
+  display: block;
+}
+.contact-card:hover { border-color: var(--border-hover); }
+.contact-label { font-family: var(--mono); font-size: 10px; color: var(--muted); text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 4px; }
+.contact-value { font-family: var(--mono); font-size: 12px; color: var(--accent); }
+
+/* FOOTER */
+.footer { padding-top: 3rem; display: flex; justify-content: space-between; align-items: center; flex-wrap: gap; }
+.footer-left { font-family: var(--mono); font-size: 11px; color: var(--muted); }
+.footer-left span { color: var(--accent2); }
+
+/* ANIMATE IN */
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.hero-eyebrow { animation: fadeUp 0.5s ease both; }
+.hero-name { animation: fadeUp 0.5s 0.1s ease both; }
+.hero-role { animation: fadeUp 0.5s 0.2s ease both; }
+.hero-cta { animation: fadeUp 0.5s 0.3s ease both; }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <!-- NAV -->
+  <nav>
+    <div class="nav-logo">SV.dev</div>
+    <div class="nav-links">
+      <a href="#projects">Projects</a>
+      <a href="#skills">Skills</a>
+      <a href="#contact">Contact</a>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <div class="hero">
+    <div class="hero-eyebrow">Available for full-time roles · 2025</div>
+    <h1 class="hero-name">
+      Shashank<span class="line2">Vatsa</span>
+    </h1>
+    <p class="hero-role">
+      Full-Stack Developer · <span>Node.js · Express · REST APIs · JavaScript</span><br>
+      Final Year B.Tech CS — Chandigarh University
+    </p>
+    <div class="hero-cta">
+      <a href="https://github.com/Six9-sudo" target="_blank" class="btn btn-primary">GitHub ↗</a>
+      <a href="https://linkedin.com/in/shashank-vatsa-388a19208" target="_blank" class="btn btn-ghost">LinkedIn</a>
+      <a href="mailto:yashsah40660@gmail.com" class="btn btn-ghost">Email Me</a>
+    </div>
+  </div>
+
+  <!-- ABOUT -->
+  <section id="about">
+    <div class="section-header">
+      <span class="section-num">01</span>
+      <span class="section-title">// About</span>
+    </div>
+    <p class="about-body">
+      I'm a final-year <strong>Computer Science student</strong> who builds things end-to-end — from REST APIs and Express backends to responsive, user-focused frontends. I don't just study software; I <strong>ship it</strong>. My projects are live, real, and built from genuine curiosity. I'm looking for a role where I can contribute from day one and keep growing fast.
+    </p>
+  </section>
+
+  <!-- SKILLS -->
+  <section id="skills">
+    <div class="section-header">
+      <span class="section-num">02</span>
+      <span class="section-title">// Skills</span>
+    </div>
+    <div class="skills-cols">
+      <div class="skill-group">
+        <div class="skill-group-title">Languages</div>
+        <div class="skill-pills">
+          <span class="pill core">JavaScript</span>
+          <span class="pill core">HTML5</span>
+          <span class="pill core">CSS3</span>
+        </div>
+      </div>
+      <div class="skill-group">
+        <div class="skill-group-title">Backend</div>
+        <div class="skill-pills">
+          <span class="pill core">Node.js</span>
+          <span class="pill core">Express.js</span>
+          <span class="pill core">REST APIs</span>
+          <span class="pill">JSON</span>
+          <span class="pill">Fetch API</span>
+        </div>
+      </div>
+      <div class="skill-group">
+        <div class="skill-group-title">Frontend</div>
+        <div class="skill-pills">
+          <span class="pill core">Responsive Design</span>
+          <span class="pill">Frontend-Backend Integration</span>
+        </div>
+      </div>
+      <div class="skill-group">
+        <div class="skill-group-title">Tools & Workflow</div>
+        <div class="skill-pills">
+          <span class="pill core">Git</span>
+          <span class="pill core">GitHub</span>
+          <span class="pill">.env / dotenv</span>
+          <span class="pill">Netlify</span>
+          <span class="pill">Deployment</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PROJECTS -->
+  <section id="projects">
+    <div class="section-header">
+      <span class="section-num">03</span>
+      <span class="section-title">// Projects</span>
+    </div>
+    <div class="projects-list">
+
+      <div class="project-card">
+        <div class="project-header">
+          <div class="project-name">AI Job Assistant</div>
+          <a href="https://github.com/Six9-sudo/ai-job-assistant" target="_blank" class="project-live">GitHub ↗</a>
+        </div>
+        <p class="project-desc">A full-stack web tool that analyses resumes and assists with job applications — built with a real Node.js backend and REST API architecture.</p>
+        <ul class="project-bullets">
+          <li>Built responsive frontend connected to Node.js + Express backend for resume analysis workflow</li>
+          <li>Developed REST API endpoints (/health, /test, /analyze) with structured JSON request handling</li>
+          <li>Managed full project setup: Git, GitHub, .gitignore, .env, and deployment pipeline</li>
+        </ul>
+        <div class="project-stack">
+          <span class="stack-tag">Node.js</span>
+          <span class="stack-tag">Express.js</span>
+          <span class="stack-tag">REST API</span>
+          <span class="stack-tag">JavaScript</span>
+          <span class="stack-tag">HTML/CSS</span>
+        </div>
+      </div>
+
+      <div class="project-card">
+        <div class="project-header">
+          <div class="project-name">PhoneFlex — Phone Rental Platform</div>
+          <a href="https://phoneflex-2500sv.netlify.app" target="_blank" class="project-live">Live ↗</a>
+        </div>
+        <p class="project-desc">A live, production-deployed platform for phone rentals with product filtering, checkout flow, and WhatsApp-based customer support integration.</p>
+        <ul class="project-bullets">
+          <li>Built fully responsive web app with product filtering and end-to-end checkout flow</li>
+          <li>Integrated WhatsApp for real-time customer query handling and issue resolution</li>
+          <li>Designed intuitive UI and planned vendor onboarding and monetization features</li>
+        </ul>
+        <div class="project-stack">
+          <span class="stack-tag">JavaScript</span>
+          <span class="stack-tag">HTML5</span>
+          <span class="stack-tag">CSS3</span>
+          <span class="stack-tag">Netlify</span>
+          <span class="stack-tag">WhatsApp API</span>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- EDUCATION -->
+  <section id="education">
+    <div class="section-header">
+      <span class="section-num">04</span>
+      <span class="section-title">// Education</span>
+    </div>
+    <div class="timeline">
+      <div class="tl-item">
+        <div class="tl-year">2021 – 2025</div>
+        <div class="tl-content">
+          <div class="tl-title">B.Tech — Computer Science</div>
+          <div class="tl-sub">Chandigarh University · Final Year</div>
+          <div class="tl-desc">Focused on software engineering, web development, and systems programming. Built real full-stack projects alongside coursework.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section id="contact">
+    <div class="section-header">
+      <span class="section-num">05</span>
+      <span class="section-title">// Contact</span>
+    </div>
+    <div class="contact-grid">
+      <a href="mailto:yashsah40660@gmail.com" class="contact-card">
+        <div class="contact-label">Email</div>
+        <div class="contact-value">yashsah40660@gmail.com</div>
+      </a>
+      <a href="https://linkedin.com/in/shashank-vatsa-388a19208" target="_blank" class="contact-card">
+        <div class="contact-label">LinkedIn</div>
+        <div class="contact-value">shashank-vatsa-388a19208</div>
+      </a>
+      <a href="https://github.com/Six9-sudo" target="_blank" class="contact-card">
+        <div class="contact-label">GitHub</div>
+        <div class="contact-value">github.com/Six9-sudo</div>
+      </a>
+      <a href="tel:+917782098599" class="contact-card">
+        <div class="contact-label">Phone</div>
+        <div class="contact-value">+91 77820 98599</div>
+      </a>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <div class="footer">
+    <div class="footer-left">© 2025 Shashank Vatsa · <span>Open to opportunities</span></div>
+  </div>
+
+</div>
+</body>
+</html>
